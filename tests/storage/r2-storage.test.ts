@@ -1,9 +1,8 @@
-import { beforeEach, afterEach, test, expect, vi } from 'vitest';
+import { env } from 'cloudflare:test';
+import { beforeEach, afterEach, describe, test, expect, vi } from 'vitest';
 import { Env } from '~/index';
 import { StorageManager } from '~/storage';
 import { R2Storage } from '~/storage/r2-storage';
-
-const describe = setupMiniflareIsolatedStorage();
 
 describe('r2-storage', () => {
   let workerEnv: Required<Env>;
@@ -11,7 +10,7 @@ describe('r2-storage', () => {
   let startTime: number;
 
   beforeEach(() => {
-    workerEnv = getMiniflareBindings();
+    workerEnv = env as Required<Env>;
     storage = new R2Storage(workerEnv.R2_STORE);
     startTime = Date.now();
     vi.useFakeTimers();

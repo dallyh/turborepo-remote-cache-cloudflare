@@ -1,16 +1,20 @@
+import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
 
-export default defineConfig({
+export default defineWorkersConfig({
   plugins: [tsconfigPaths()],
   test: {
-    environment: 'miniflare',
-    environmentOptions: {
-      envPath: './.dev.vars',
-      modules: true,
-      scriptPath: './dist/index.js',
-      wranglerConfigPath: './wrangler.vitest.toml',
-      bindings: { ENVIRONMENT: 'testing' },
+    poolOptions: {
+      workers: {
+        miniflare: {
+          bindings: {
+            ENVIRONMENT: 'testing',
+          },
+        },
+        wrangler: {
+          configPath: './wrangler.vitest.toml',
+        },
+      },
     },
     reporters: ['verbose'],
     coverage: {

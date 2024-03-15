@@ -1,9 +1,8 @@
-import { beforeEach, afterEach, test, expect, vi } from 'vitest';
+import { env } from 'cloudflare:test';
+import { beforeEach, afterEach, describe, test, expect, vi } from 'vitest';
 import { Env } from '~/index';
 import { StorageManager } from '~/storage';
 import { KvStorage } from '~/storage/kv-storage';
-
-const describe = setupMiniflareIsolatedStorage();
 
 describe('kv-storage', () => {
   let workerEnv: Required<Env>;
@@ -11,7 +10,7 @@ describe('kv-storage', () => {
   let startTime: number;
 
   beforeEach(() => {
-    workerEnv = getMiniflareBindings();
+    workerEnv = env as Required<Env>;
     storage = new KvStorage(workerEnv.KV_STORE);
     startTime = Date.now();
     vi.useFakeTimers();
