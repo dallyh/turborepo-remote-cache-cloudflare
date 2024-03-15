@@ -18,7 +18,7 @@ export default defineWorkersConfig({
     },
     reporters: ['verbose'],
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       reporter: ['text', 'html', 'clover', 'json'],
     },
   },
