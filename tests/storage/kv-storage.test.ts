@@ -110,12 +110,7 @@ describe('kv-storage', () => {
     });
 
     test('can write stream value', async () => {
-      const stream = new ReadableStream({
-        start: (controller) => {
-          controller.enqueue('value1');
-          controller.close();
-        },
-      });
+      const stream = StorageManager.textToReadableStream('value1');
       await storage.write('key1', stream);
       const result = await storage.read('key1');
       const dataAsText = await StorageManager.readableStreamToText(result!);
